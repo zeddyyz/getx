@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
 import '../../get.dart';
@@ -14,9 +16,26 @@ import '../../get.dart';
 mixin GetLifeCycleMixin {
   /// Called immediately after the widget is allocated in memory.
   /// You might use this to initialize something for the controller.
+  ///
+  /// This method can be overridden as either sync or async:
+  /// ```dart
+  /// // Sync version
+  /// @override
+  /// void onInit() {
+  ///   super.onInit();
+  ///   // sync initialization
+  /// }
+  ///
+  /// // Async version (use with Get.putAsync)
+  /// @override
+  /// Future<void> onInit() async {
+  ///   super.onInit();
+  ///   await loadData();
+  /// }
+  /// ```
   @protected
   @mustCallSuper
-  void onInit() {
+  FutureOr<void> onInit() {
     Engine.instance.addPostFrameCallback((_) => onReady());
   }
 
@@ -49,6 +68,16 @@ mixin GetLifeCycleMixin {
     // _checkIfAlreadyConfigured();
     if (_initialized) return;
     onInit();
+    _initialized = true;
+  }
+
+  /// Async version of [onStart] that awaits [onInit] if it returns a Future.
+  /// Used internally by [Get.putAsync] to ensure async initialization completes.
+  @mustCallSuper
+  @nonVirtual
+  Future<void> onStartAsync() async {
+    if (_initialized) return;
+    await onInit();
     _initialized = true;
   }
 

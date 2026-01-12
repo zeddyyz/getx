@@ -83,6 +83,40 @@ extension Inst on GetInterface {
     return find<S>(tag: tag);
   }
 
+  /// Async version of [put] that awaits the [onInit] lifecycle method.
+  ///
+  /// Use this when your controller has an async [onInit] method that needs
+  /// to complete before the controller is ready to use.
+  ///
+  /// Example:
+  /// ```dart
+  /// class MyController extends GetxController {
+  ///   late final Data data;
+  ///
+  ///   @override
+  ///   Future<void> onInit() async {
+  ///     super.onInit();
+  ///     data = await fetchData();
+  ///   }
+  /// }
+  ///
+  /// // Usage:
+  /// final controller = await Get.putAsync(MyController());
+  /// print(controller.data); // Data is ready
+  /// ```
+  Future<S> putAsync<S>(
+    S dependency, {
+    String? tag,
+    bool permanent = false,
+  }) async {
+    _insert(
+        isSingleton: true,
+        name: tag,
+        permanent: permanent,
+        builder: (() => dependency));
+    return _findAsync<S>(tag: tag);
+  }
+
   /// Creates a new Instance<S> lazily from the `<S>builder()` callback.
   ///
   /// The first time you call `Get.find()`, the `builder()` callback will create
@@ -209,6 +243,28 @@ extension Inst on GetInterface {
     return i;
   }
 
+  /// Async version of [_initDependencies] that awaits the controller's [onInit].
+  Future<S?> _initDependenciesAsync<S>({String? name}) async {
+    final key = _getKey(S, name);
+    final isInit = _singl[key]!.isInit;
+    S? i;
+    if (!isInit) {
+      final isSingleton = _singl[key]?.isSingleton ?? false;
+      if (isSingleton) {
+        _singl[key]!.isInit = true;
+      }
+      i = await _startControllerAsync<S>(tag: name);
+
+      if (isSingleton) {
+        if (Get.smartManagement != SmartManagement.onlyBuilder) {
+          RouterReportManager.instance
+              .reportDependencyLinkedToRoute(_getKey(S, name));
+        }
+      }
+    }
+    return i;
+  }
+
   InstanceInfo getInstanceInfo<S>({String? tag}) {
     final build = _getDependency<S>(tag: tag);
 
@@ -260,6 +316,24 @@ extension Inst on GetInterface {
     return i;
   }
 
+  /// Async version of [_startController] that awaits [onInit].
+  Future<S> _startControllerAsync<S>({String? tag}) async {
+    final key = _getKey(S, tag);
+    final i = _singl[key]!.getDependency() as S;
+    if (i is GetLifeCycleMixin) {
+      await i.onStartAsync();
+      if (tag == null) {
+        Get.log('Instance "$S" has been initialized');
+      } else {
+        Get.log('Instance "$S" with tag "$tag" has been initialized');
+      }
+      if (!_singl[key]!.isSingleton!) {
+        RouterReportManager.instance.appendRouteByCreate(i);
+      }
+    }
+    return i;
+  }
+
   S putOrFind<S>(InstanceBuilderCallback<S> dep, {String? tag}) {
     final key = _getKey(S, tag);
 
@@ -295,6 +369,28 @@ extension Inst on GetInterface {
     } else {
       // ignore: lines_longer_than_80_chars
       throw '"$S" not found. You need to call "Get.put($S())" or "Get.lazyPut(()=>$S())"';
+    }
+  }
+
+  /// Async version of [find] that awaits the controller's [onInit] lifecycle.
+  /// Used internally by [putAsync].
+  Future<S> _findAsync<S>({String? tag}) async {
+    final key = _getKey(S, tag);
+    if (isRegistered<S>(tag: tag)) {
+      final dep = _singl[key];
+      if (dep == null) {
+        if (tag == null) {
+          throw 'Class "$S" is not registered';
+        } else {
+          throw 'Class "$S" with tag "$tag" is not registered';
+        }
+      }
+
+      final i = await _initDependenciesAsync<S>(name: tag);
+      return i ?? dep.getDependency() as S;
+    } else {
+      // ignore: lines_longer_than_80_chars
+      throw '"$S" not found. You need to call "Get.putAsync($S())" or "Get.lazyPut(()=>$S())"';
     }
   }
 
@@ -495,12 +591,6 @@ extension Inst on GetInterface {
 typedef InstanceBuilderCallback<S> = S Function();
 
 typedef InstanceCreateBuilderCallback<S> = S Function(BuildContext _);
-
-// typedef InstanceBuilderCallback<S> = S Function();
-
-// typedef InjectorBuilderCallback<S> = S Function(Inst);
-
-typedef AsyncInstanceBuilderCallback<S> = Future<S> Function();
 
 /// Internal class to register instances with `Get.put<S>()`.
 class _InstanceBuilderFactory<S> {
