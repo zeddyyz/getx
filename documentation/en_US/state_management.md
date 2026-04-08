@@ -265,15 +265,15 @@ And then, you checked if a user is "logged in" to trigger an event in `ever` .
 ``` dart
 @override
 onInit() async {
-  ever(isLogged, fireRoute);
+  ever(isLogged, handleAuthChange);
   isLogged.value = await Preferences.hasToken();
 }
 
-fireRoute(logged) {
+handleAuthChange(logged) {
   if (logged) {
-   Get.off(Home());
+    status = GetStatus.success(user);
   } else {
-   Get.off(Login());
+    status = GetStatus.empty();
   }
 }
 ```

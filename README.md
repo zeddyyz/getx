@@ -1,120 +1,28 @@
-![](https://raw.githubusercontent.com/jonataslaw/getx-community/master/get.png)
-
 [![pub package](https://img.shields.io/pub/v/get.svg?label=get&color=blue)](https://pub.dev/packages/get)
-[![popularity](https://img.shields.io/pub/popularity/get?logo=dart)](https://pub.dev/packages/get/score)
-[![likes](https://img.shields.io/pub/likes/get?logo=dart)](https://pub.dev/packages/get/score)
-[![pub points](https://img.shields.io/pub/points/sentry?logo=dart)](https://pub.dev/packages/get/score)
 ![building](https://github.com/jonataslaw/get/workflows/build/badge.svg)
-[![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://pub.dev/packages/effective_dart)
-[![Discord Shield](https://img.shields.io/discord/722900883784073290.svg?logo=discord)](https://discord.com/invite/9Hpt99N)
-[![Get on Slack](https://img.shields.io/badge/slack-join-orange.svg)](https://communityinviter.com/apps/getxworkspace/getx)
-[![Telegram](https://img.shields.io/badge/chat-on%20Telegram-blue.svg)](https://t.me/joinchat/PhdbJRmsZNpAqSLJL6bH7g)
-<a href="https://github.com/Solido/awesome-flutter">
-<img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
-</a>
-<a href="https://www.buymeacoffee.com/jonataslaw" target="_blank"><img src="https://i.imgur.com/aV6DDA7.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" > </a>
 
-![](https://raw.githubusercontent.com/jonataslaw/getx-community/master/getx.png)
+# GetX -- State Management & Dependency Injection
 
+A high-performance, lightweight state management and dependency injection solution for Flutter. This package provides reactive and simple state managers, a powerful DI system, and controller lifecycle management -- without any dependency on navigation, HTTP, or other unrelated concerns.
 
-<div align="center">
+> **Migration note:** This version removes navigation (`GetMaterialApp`, `Get.to`, named routes), HTTP (`GetConnect`), animations, internationalization, `GetPlatform`, `GetResponsiveView`, context extensions, and general utilities. Use Flutter's built-in `MaterialApp` and `Navigator` for routing. Controllers are disposed via `Get.delete()`, widget unmount (`autoRemove`), or `permanent: true`.
 
-**Languages:**
-
-  
-[![English](https://img.shields.io/badge/Language-English-blueviolet?style=for-the-badge)](README.md)
-[![Vietnamese](https://img.shields.io/badge/Language-Vietnamese-blueviolet?style=for-the-badge)](README-vi.md)
-[![Indonesian](https://img.shields.io/badge/Language-Indonesian-blueviolet?style=for-the-badge)](README.id-ID.md)
-[![Urdu](https://img.shields.io/badge/Language-Urdu-blueviolet?style=for-the-badge)](README.ur-PK.md)
-[![Chinese](https://img.shields.io/badge/Language-Chinese-blueviolet?style=for-the-badge)](README.zh-cn.md)
-[![Portuguese](https://img.shields.io/badge/Language-Portuguese-blueviolet?style=for-the-badge)](README.pt-br.md)
-[![Spanish](https://img.shields.io/badge/Language-Spanish-blueviolet?style=for-the-badge)](README-es.md)
-[![Russian](https://img.shields.io/badge/Language-Russian-blueviolet?style=for-the-badge)](README.ru.md)
-[![Polish](https://img.shields.io/badge/Language-Polish-blueviolet?style=for-the-badge)](README.pl.md)
-[![Korean](https://img.shields.io/badge/Language-Korean-blueviolet?style=for-the-badge)](README.ko-kr.md)
-[![French](https://img.shields.io/badge/Language-French-blueviolet?style=for-the-badge)](README-fr.md)
-[![Japanese](https://img.shields.io/badge/Language-Japanese-blueviolet?style=for-the-badge)](README.ja-JP.md)
-[![Hindi](https://img.shields.io/badge/Language-Hindi-blueviolet?style=for-the-badge)](README-hi.md)
-[![Bangla](https://img.shields.io/badge/Language-Bangla-blueviolet?style=for-the-badge)](README-bn.md)
-  
-  
-</div>
-
-- [About Get](#about-get)
 - [Installing](#installing)
-- [Counter App with GetX](#counter-app-with-getx)
-- [The Three pillars](#the-three-pillars)
-  - [State management](#state-management)
-    - [Reactive State Manager](#reactive-state-manager)
-    - [More details about state management](#more-details-about-state-management)
-  - [Route management](#route-management)
-    - [More details about route management](#more-details-about-route-management)
-  - [Dependency management](#dependency-management)
-    - [More details about dependency management](#more-details-about-dependency-management)
-- [Utils](#utils)
-  - [Internationalization](#internationalization)
-    - [Translations](#translations)
-      - [Using translations](#using-translations)
-    - [Locales](#locales)
-      - [Change locale](#change-locale)
-      - [System locale](#system-locale)
-  - [Change Theme](#change-theme)
-  - [GetConnect](#getconnect)
-    - [Default configuration](#default-configuration)
-    - [Custom configuration](#custom-configuration)
-  - [GetPage Middleware](#getpage-middleware)
-    - [Priority](#priority)
-    - [Redirect](#redirect)
-    - [onPageCalled](#onpagecalled)
-    - [OnBindingsStart](#onbindingsstart)
-    - [OnPageBuildStart](#onpagebuildstart)
-    - [OnPageBuilt](#onpagebuilt)
-    - [OnPageDispose](#onpagedispose)
-  - [Other Advanced APIs](#other-advanced-apis)
-    - [Optional Global Settings and Manual configurations](#optional-global-settings-and-manual-configurations)
-    - [Local State Widgets](#local-state-widgets)
-      - [ValueBuilder](#valuebuilder)
-      - [ObxValue](#obxvalue)
-  - [Useful tips](#useful-tips)
-    - [GetView](#getview)
-    - [GetResponsiveView](#getresponsiveview)
-      - [How to use it](#how-to-use-it)
-    - [GetWidget](#getwidget)
-    - [GetxService](#getxservice)
-- [Breaking changes from 2.0](#breaking-changes-from-20)
-- [Why Getx?](#why-getx)
+- [Quick Start](#quick-start)
+- [State Management](#state-management)
+  - [Reactive State Manager](#reactive-state-manager)
+  - [More details about state management](#more-details-about-state-management)
+- [Dependency Management](#dependency-management)
+  - [More details about dependency management](#more-details-about-dependency-management)
+- [Reactive Variables (.obs)](#reactive-variables-obs)
+- [StateMixin](#statemixin)
+- [ObxValue](#obxvalue)
+- [Useful Widgets](#useful-widgets)
+  - [GetView](#getview)
+  - [GetWidget](#getwidget)
+  - [GetxService](#getxservice)
+- [Testing](#testing)
 - [Community](#community)
-  - [Community channels](#community-channels)
-  - [How to contribute](#how-to-contribute)
-  - [Articles and videos](#articles-and-videos)
-
-# About Get
-
-- GetX is an extra-light and powerful solution for Flutter. It combines high-performance state management, intelligent dependency injection, and route management quickly and practically.
-
-- GetX has 3 basic principles. This means that these are the priority for all resources in the library: **PRODUCTIVITY, PERFORMANCE AND ORGANIZATION.**
-
-  - **PERFORMANCE:** GetX is focused on performance and minimum consumption of resources. GetX does not use Streams or ChangeNotifier.
-
-  - **PRODUCTIVITY:** GetX uses an easy and pleasant syntax. No matter what you want to do, there is always an easier way with GetX. It will save hours of development and will provide the maximum performance your application can deliver.
-
-    Generally, the developer should be concerned with removing controllers from memory. With GetX this is not necessary because resources are removed from memory when they are not used by default. If you want to keep it in memory, you must explicitly declare "permanent: true" in your dependency. That way, in addition to saving time, you are less at risk of having unnecessary dependencies on memory. Dependency loading is also lazy by default.
-
-  - **ORGANIZATION:** GetX allows the total decoupling of the View, presentation logic, business logic, dependency injection, and navigation. You do not need context to navigate between routes, so you are not dependent on the widget tree (visualization) for this. You don't need context to access your controllers/blocs through an inheritedWidget, so you completely decouple your presentation logic and business logic from your visualization layer. You do not need to inject your Controllers/Models/Blocs classes into your widget tree through `MultiProvider`s. For this, GetX uses its own dependency injection feature, decoupling the DI from its view completely.
-
-    With GetX you know where to find each feature of your application, having clean code by default. In addition to making maintenance easy, this makes the sharing of modules something that until then in Flutter was unthinkable, something totally possible.
-    BLoC was a starting point for organizing code in Flutter, it separates business logic from visualization. GetX is a natural evolution of this, not only separating the business logic but the presentation logic. Bonus injection of dependencies and routes are also decoupled, and the data layer is out of it all. You know where everything is, and all of this in an easier way than building a hello world.
-    GetX is the easiest, practical, and scalable way to build high-performance applications with the Flutter SDK. It has a large ecosystem around it that works perfectly together, it's easy for beginners, and it's accurate for experts. It is secure, stable, up-to-date, and offers a huge range of APIs built-in that are not present in the default Flutter SDK.
-
-- GetX is not bloated. It has a multitude of features that allow you to start programming without worrying about anything, but each of these features are in separate containers and are only started after use. If you only use State Management, only State Management will be compiled. If you only use routes, nothing from the state management will be compiled.
-
-- GetX has a huge ecosystem, a large community, a large number of collaborators, and will be maintained as long as the Flutter exists. GetX too is capable of running with the same code on Android, iOS, Web, Mac, Linux, Windows, and on your server.
-  **It is possible to fully reuse your code made on the frontend on your backend with [Get Server](https://github.com/jonataslaw/get_server)**.
-
-**In addition, the entire development process can be completely automated, both on the server and on the front end with [Get CLI](https://github.com/jonataslaw/get_cli)**.
-
-**In addition, to further increase your productivity, we have the
-[extension to VSCode](https://marketplace.visualstudio.com/items?itemName=get-snippets.get-snippets) and the [extension to Android Studio/Intellij](https://plugins.jetbrains.com/plugin/14975-getx-snippets)**
 
 # Installing
 
@@ -131,92 +39,66 @@ Import get in files that it will be used:
 import 'package:get/get.dart';
 ```
 
-# Counter App with GetX
+# Quick Start
 
-The "counter" project created by default on new project on Flutter has over 100 lines (with comments). To show the power of Get, I will demonstrate how to make a "counter" changing the state with each click, switching between pages and sharing the state between screens, all in an organized way, separating the business logic from the view, in ONLY 26 LINES CODE INCLUDING COMMENTS.
+Create a controller with reactive variables and use `Obx` to rebuild the UI automatically when they change.
 
 - Step 1:
-  Add "Get" before your MaterialApp, turning it into GetMaterialApp
-
-```dart
-void main() => runApp(GetMaterialApp(home: Home()));
-```
-
-- Note: this does not modify the MaterialApp of the Flutter, GetMaterialApp is not a modified MaterialApp, it is just a pre-configured Widget, which has the default MaterialApp as a child. You can configure this manually, but it is definitely not necessary. GetMaterialApp will create routes, inject them, inject translations, inject everything you need for route navigation. If you use Get only for state management or dependency management, it is not necessary to use GetMaterialApp. GetMaterialApp is necessary for routes, snackbars, internationalization, bottomSheets, dialogs, and high-level apis related to routes and absence of context.
-- Note²: This step is only necessary if you gonna use route management (`Get.to()`, `Get.back()` and so on). If you not gonna use it then it is not necessary to do step 1
-
-- Step 2:
   Create your business logic class and place all variables, methods and controllers inside it.
   You can make any variable observable using a simple ".obs".
 
 ```dart
-class Controller extends GetxController{
+class Controller extends GetxController {
   var count = 0.obs;
   increment() => count++;
 }
 ```
 
-- Step 3:
-  Create your View, use StatelessWidget and save some RAM, with Get you may no longer need to use StatefulWidget.
+- Step 2:
+  Create your View using StatelessWidget. Use `Get.put()` to register the controller, and `Obx` to reactively rebuild when the value changes.
 
 ```dart
 class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
-  Widget build(context) {
-
-    // Instantiate your class using Get.put() to make it available for all "child" routes there.
+  Widget build(BuildContext context) {
     final Controller c = Get.put(Controller());
 
     return Scaffold(
-      // Use Obx(()=> to update Text() whenever count is changed.
       appBar: AppBar(title: Obx(() => Text("Clicks: ${c.count}"))),
-
-      // Replace the 8 lines Navigator.push by a simple Get.to(). You don't need context
-      body: Center(child: ElevatedButton(
-              child: Text("Go to Other"), onPressed: () => Get.to(Other()))),
-      floatingActionButton:
-          FloatingActionButton(child: Icon(Icons.add), onPressed: c.increment));
-  }
-}
-
-class Other extends StatelessWidget {
-  // You can ask Get to find a Controller that is being used by another page and redirect you to it.
-  final Controller c = Get.find();
-
-  @override
-  Widget build(context){
-     // Access the updated count variable
-     return Scaffold(body: Center(child: Text("${c.count}")));
+      body: Center(child: Text("Press the button")),
+      floatingActionButton: FloatingActionButton(
+        onPressed: c.increment,
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }
 ```
 
-Result:
+- Step 3:
+  Use a standard `MaterialApp` -- no special root widget required.
 
-![](https://raw.githubusercontent.com/jonataslaw/getx-community/master/counter-app-gif.gif)
+```dart
+void main() => runApp(MaterialApp(home: Home()));
+```
 
-This is a simple project but it already makes clear how powerful Get is. As your project grows, this difference will become more significant.
+That's it. No special app widget, no context tricks -- just a controller and a reactive widget.
 
-Get was designed to work with teams, but it makes the job of an individual developer simple.
+# State Management
 
-Improve your deadlines, deliver everything on time without losing performance. Get is not for everyone, but if you identified with that phrase, Get is for you!
+Get has two different state managers: the simple state manager (GetBuilder) and the reactive state manager (GetX/Obx).
 
-# The Three pillars
-
-## State management
-
-Get has two different state managers: the simple state manager (we'll call it GetBuilder) and the reactive state manager (GetX/Obx)
-
-### Reactive State Manager
+## Reactive State Manager
 
 Reactive programming can alienate many people because it is said to be complicated. GetX turns reactive programming into something quite simple:
 
 - You won't need to create StreamControllers.
-- You won't need to create a StreamBuilder for each variable
+- You won't need to create a StreamBuilder for each variable.
 - You will not need to create a class for each state.
 - You will not need to create a get for an initial value.
-- You will not need to use code generators
+- You will not need to use code generators.
 
 Reactive programming with Get is as easy as using setState.
 
@@ -244,87 +126,34 @@ That's all. It's _that_ simple.
 
 ### More details about state management
 
-**See an more in-depth explanation of state management [here](./documentation/en_US/state_management.md). There you will see more examples and also the difference between the simple state manager and the reactive state manager**
+**See a more in-depth explanation of state management [here](./documentation/en_US/state_management.md). There you will see more examples and also the difference between the simple state manager and the reactive state manager.**
 
-You will get a good idea of GetX power.
+## Dependency Management
 
-## Route management
-
-If you are going to use routes/snackbars/dialogs/bottomsheets without context, GetX is excellent for you too, just see it:
-
-Add "Get" before your MaterialApp, turning it into GetMaterialApp
-
-```dart
-GetMaterialApp( // Before: MaterialApp(
-  home: MyHome(),
-)
-```
-
-Navigate to a new screen:
-
-```dart
-
-Get.to(NextScreen());
-```
-
-Navigate to new screen with name. See more details on named routes [here](./documentation/en_US/route_management.md#navigation-with-named-routes)
-
-```dart
-
-Get.toNamed('/details');
-```
-
-To close snackbars, dialogs, bottomsheets, or anything you would normally close with Navigator.pop(context);
-
-```dart
-Get.back();
-```
-
-To go to the next screen and no option to go back to the previous screen (for use in SplashScreens, login screens, etc.)
-
-```dart
-Get.off(NextScreen());
-```
-
-To go to the next screen and cancel all previous routes (useful in shopping carts, polls, and tests)
-
-```dart
-Get.offAll(NextScreen());
-```
-
-Noticed that you didn't have to use context to do any of these things? That's one of the biggest advantages of using Get route management. With this, you can execute all these methods from within your controller class, without worries.
-
-### More details about route management
-
-**Get works with named routes and also offers lower-level control over your routes! There is in-depth documentation [here](./documentation/en_US/route_management.md)**
-
-## Dependency management
-
-Get has a simple and powerful dependency manager that allows you to retrieve the same class as your Bloc or Controller with just 1 lines of code, no Provider context, no inheritedWidget:
+Get has a simple and powerful dependency manager that allows you to retrieve the same class as your Bloc or Controller with just 1 line of code, no Provider context, no inheritedWidget:
 
 ```dart
 Controller controller = Get.put(Controller()); // Rather Controller controller = Controller();
 ```
 
-- Note: If you are using Get's State Manager, pay more attention to the bindings API, which will make it easier to connect your view to your controller.
-
 Instead of instantiating your class within the class you are using, you are instantiating it within the Get instance, which will make it available throughout your App.
-So you can use your controller (or class Bloc) normally
+So you can use your controller (or class Bloc) normally.
 
-**Tip:** Get dependency management is decoupled from other parts of the package, so if for example, your app is already using a state manager (any one, it doesn't matter), you don't need to rewrite it all, you can use this dependency injection with no problems at all
+**Tip:** Get dependency management is decoupled from other parts of the package. If your app is already using a state manager (any one, it doesn't matter), you don't need to rewrite it all -- you can use this dependency injection with no problems at all.
 
 ```dart
 controller.fetchApi();
 ```
 
-Imagine that you have navigated through numerous routes, and you need data that was left behind in your controller, you would need a state manager combined with the Provider or Get_it, correct? Not with Get. You just need to ask Get to "find" for your controller, you don't need any additional dependencies:
+Imagine that you need data that was left behind in your controller. You just need to ask Get to "find" your controller, you don't need any additional dependencies:
 
 ```dart
 Controller controller = Get.find();
-//Yes, it looks like Magic, Get will find your controller, and will deliver it to you. You can have 1 million controllers instantiated, Get will always give you the right controller.
+// Get will find your controller and deliver it to you.
+// You can have 1 million controllers instantiated, Get will always give you the right controller.
 ```
 
-And then you will be able to recover your controller data that was obtained back there:
+And then you will be able to recover your controller data:
 
 ```dart
 Text(controller.textFromApi);
@@ -334,507 +163,7 @@ Text(controller.textFromApi);
 
 **See a more in-depth explanation of dependency management [here](./documentation/en_US/dependency_management.md)**
 
-# Utils
-
-## Internationalization
-
-### Translations
-
-Translations are kept as a simple key-value dictionary map.
-To add custom translations, create a class and extend `Translations`.
-
-```dart
-import 'package:get/get.dart';
-
-class Messages extends Translations {
-  @override
-  Map<String, Map<String, String>> get keys => {
-        'en_US': {
-          'hello': 'Hello World',
-        },
-        'de_DE': {
-          'hello': 'Hallo Welt',
-        }
-      };
-}
-```
-
-#### Using translations
-
-Just append `.tr` to the specified key and it will be translated, using the current value of `Get.locale` and `Get.fallbackLocale`.
-
-```dart
-Text('title'.tr);
-```
-
-#### Using translation with singular and plural
-
-```dart
-var products = [];
-Text('singularKey'.trPlural('pluralKey', products.length, Args));
-```
-
-#### Using translation with parameters
-
-```dart
-import 'package:get/get.dart';
-
-
-Map<String, Map<String, String>> get keys => {
-    'en_US': {
-        'logged_in': 'logged in as @name with email @email',
-    },
-    'es_ES': {
-       'logged_in': 'iniciado sesión como @name con e-mail @email',
-    }
-};
-
-Text('logged_in'.trParams({
-  'name': 'Jhon',
-  'email': 'jhon@example.com'
-  }));
-```
-
-### Locales
-
-Pass parameters to `GetMaterialApp` to define the locale and translations.
-
-```dart
-return GetMaterialApp(
-    translations: Messages(), // your translations
-    locale: Locale('en', 'US'), // translations will be displayed in that locale
-    fallbackLocale: Locale('en', 'UK'), // specify the fallback locale in case an invalid locale is selected.
-);
-```
-
-#### Change locale
-
-Call `Get.updateLocale(locale)` to update the locale. Translations then automatically use the new locale.
-
-```dart
-var locale = Locale('en', 'US');
-Get.updateLocale(locale);
-```
-
-#### System locale
-
-To read the system locale, you could use `Get.deviceLocale`.
-
-```dart
-return GetMaterialApp(
-    locale: Get.deviceLocale,
-);
-```
-
-## Change Theme
-
-Please do not use any higher level widget than `GetMaterialApp` in order to update it. This can trigger duplicate keys. A lot of people are used to the prehistoric approach of creating a "ThemeProvider" widget just to change the theme of your app, and this is definitely NOT necessary with **GetX™**.
-
-You can create your custom theme and simply add it within `Get.changeTheme` without any boilerplate for that:
-
-```dart
-Get.changeTheme(ThemeData.light());
-```
-
-If you want to create something like a button that changes the Theme in `onTap`, you can combine two **GetX™** APIs for that:
-
-- The api that checks if the dark `Theme` is being used.
-- And the `Theme` Change API, you can just put this within an `onPressed`:
-
-```dart
-Get.changeTheme(Get.isDarkMode? ThemeData.light(): ThemeData.dark());
-```
-
-When `.darkmode` is activated, it will switch to the _light theme_, and when the _light theme_ becomes active, it will change to _dark theme_.
-
-## GetConnect
-
-GetConnect is an easy way to communicate from your back to your front with http or websockets
-
-### Default configuration
-
-You can simply extend GetConnect and use the GET/POST/PUT/DELETE/SOCKET methods to communicate with your Rest API or websockets.
-
-```dart
-class UserProvider extends GetConnect {
-  // Get request
-  Future<Response> getUser(int id) => get('http://youapi/users/$id');
-  // Post request
-  Future<Response> postUser(Map data) => post('http://youapi/users', body: data);
-  // Post request with File
-  Future<Response<CasesModel>> postCases(List<int> image) {
-    final form = FormData({
-      'file': MultipartFile(image, filename: 'avatar.png'),
-      'otherFile': MultipartFile(image, filename: 'cover.png'),
-    });
-    return post('http://youapi/users/upload', form);
-  }
-
-  GetSocket userMessages() {
-    return socket('https://yourapi/users/socket');
-  }
-}
-```
-
-### Custom configuration
-
-GetConnect is highly customizable You can define base Url, as answer modifiers, as Requests modifiers, define an authenticator, and even the number of attempts in which it will try to authenticate itself, in addition to giving the possibility to define a standard decoder that will transform all your requests into your Models without any additional configuration.
-
-```dart
-class HomeProvider extends GetConnect {
-  @override
-  void onInit() {
-    // All request will pass to jsonEncode so CasesModel.fromJson()
-    httpClient.defaultDecoder = CasesModel.fromJson;
-    httpClient.baseUrl = 'https://api.covid19api.com';
-    // baseUrl = 'https://api.covid19api.com'; // It define baseUrl to
-    // Http and websockets if used with no [httpClient] instance
-
-    // It's will attach 'apikey' property on header from all requests
-    httpClient.addRequestModifier((request) {
-      request.headers['apikey'] = '12345678';
-      return request;
-    });
-
-    // Even if the server sends data from the country "Brazil",
-    // it will never be displayed to users, because you remove
-    // that data from the response, even before the response is delivered
-    httpClient.addResponseModifier<CasesModel>((request, response) {
-      CasesModel model = response.body;
-      if (model.countries.contains('Brazil')) {
-        model.countries.remove('Brazilll');
-      }
-    });
-
-    httpClient.addAuthenticator((request) async {
-      final response = await get("http://yourapi/token");
-      final token = response.body['token'];
-      // Set the header
-      request.headers['Authorization'] = "$token";
-      return request;
-    });
-
-    //Autenticator will be called 3 times if HttpStatus is
-    //HttpStatus.unauthorized
-    httpClient.maxAuthRetries = 3;
-  }
-
-  @override
-  Future<Response<CasesModel>> getCases(String path) => get(path);
-}
-```
-
-## GetPage Middleware
-
-The GetPage has now new property that takes a list of GetMiddleWare and run them in the specific order.
-
-**Note**: When GetPage has a Middlewares, all the children of this page will have the same middlewares automatically.
-
-### Priority
-
-The Order of the Middlewares to run can be set by the priority in the GetMiddleware.
-
-```dart
-final middlewares = [
-  GetMiddleware(priority: 2),
-  GetMiddleware(priority: 5),
-  GetMiddleware(priority: 4),
-  GetMiddleware(priority: -8),
-];
-```
-
-those middlewares will be run in this order **-8 => 2 => 4 => 5**
-
-### Redirect
-
-This function will be called when the page of the called route is being searched for. It takes RouteSettings as a result to redirect to. Or give it null and there will be no redirecting.
-
-```dart
-RouteSettings redirect(String route) {
-  final authService = Get.find<AuthService>();
-  return authService.authed.value ? null : RouteSettings(name: '/login')
-}
-```
-
-### onPageCalled
-
-This function will be called when this Page is called before anything created
-you can use it to change something about the page or give it new page
-
-```dart
-GetPage onPageCalled(GetPage page) {
-  final authService = Get.find<AuthService>();
-  return page.copyWith(title: 'Welcome ${authService.UserName}');
-}
-```
-
-### OnBindingsStart
-
-This function will be called right before the Bindings are initialize.
-Here you can change Bindings for this page.
-
-```dart
-List<Bindings> onBindingsStart(List<Bindings> bindings) {
-  final authService = Get.find<AuthService>();
-  if (authService.isAdmin) {
-    bindings.add(AdminBinding());
-  }
-  return bindings;
-}
-```
-
-### OnPageBuildStart
-
-This function will be called right after the Bindings are initialize.
-Here you can do something after that you created the bindings and before creating the page widget.
-
-```dart
-GetPageBuilder onPageBuildStart(GetPageBuilder page) {
-  print('bindings are ready');
-  return page;
-}
-```
-
-### OnPageBuilt
-
-This function will be called right after the GetPage.page function is called and will give you the result of the function. and take the widget that will be showed.
-
-### OnPageDispose
-
-This function will be called right after disposing all the related objects (Controllers, views, ...) of the page.
-
-## Other Advanced APIs
-
-```dart
-// give the current args from currentScreen
-Get.arguments
-
-// give name of previous route
-Get.previousRoute
-
-// give the raw route to access for example, rawRoute.isFirst()
-Get.rawRoute
-
-// give access to Routing API from GetObserver
-Get.routing
-
-// check if snackbar is open
-Get.isSnackbarOpen
-
-// check if dialog is open
-Get.isDialogOpen
-
-// check if bottomsheet is open
-Get.isBottomSheetOpen
-
-// remove one route.
-Get.removeRoute()
-
-// back repeatedly until the predicate returns true.
-Get.until()
-
-// go to next route and remove all the previous routes until the predicate returns true.
-Get.offUntil()
-
-// go to next named route and remove all the previous routes until the predicate returns true.
-Get.offNamedUntil()
-
-//Check in what platform the app is running
-GetPlatform.isAndroid
-GetPlatform.isIOS
-GetPlatform.isMacOS
-GetPlatform.isWindows
-GetPlatform.isLinux
-GetPlatform.isFuchsia
-
-//Check the device type
-GetPlatform.isMobile
-GetPlatform.isDesktop
-//All platforms are supported independently in web!
-//You can tell if you are running inside a browser
-//on Windows, iOS, OSX, Android, etc.
-GetPlatform.isWeb
-
-
-// Equivalent to : MediaQuery.of(context).size.height,
-// but immutable.
-Get.height
-Get.width
-
-// Gives the current context of the Navigator.
-Get.context
-
-// Gives the context of the snackbar/dialog/bottomsheet in the foreground, anywhere in your code.
-Get.contextOverlay
-
-// Note: the following methods are extensions on context. Since you
-// have access to context in any place of your UI, you can use it anywhere in the UI code
-
-// If you need a changeable height/width (like Desktop or browser windows that can be scaled) you will need to use context.
-context.width
-context.height
-
-// Gives you the power to define half the screen, a third of it and so on.
-// Useful for responsive applications.
-// param dividedBy (double) optional - default: 1
-// param reducedBy (double) optional - default: 0
-context.heightTransformer()
-context.widthTransformer()
-
-/// Similar to MediaQuery.sizeOf(context);
-context.mediaQuerySize()
-
-/// Similar to MediaQuery.paddingOf(context);
-context.mediaQueryPadding()
-
-/// Similar to MediaQuery.viewPaddingOf(context);
-context.mediaQueryViewPadding()
-
-/// Similar to MediaQuery.viewInsetsOf(context);
-context.mediaQueryViewInsets()
-
-/// Similar to MediaQuery.orientationOf(context);
-context.orientation()
-
-/// Check if device is on landscape mode
-context.isLandscape()
-
-/// Check if device is on portrait mode
-context.isPortrait()
-
-/// Similar to MediaQuery.devicePixelRatioOf(context);
-context.devicePixelRatio()
-
-/// Similar to MediaQuery.textScaleFactorOf(context);
-context.textScaleFactor()
-
-/// Get the shortestSide from screen
-context.mediaQueryShortestSide()
-
-/// True if width be larger than 800
-context.showNavbar()
-
-/// True if the shortestSide is smaller than 600p
-context.isPhone()
-
-/// True if the shortestSide is largest than 600p
-context.isSmallTablet()
-
-/// True if the shortestSide is largest than 720p
-context.isLargeTablet()
-
-/// True if the current device is Tablet
-context.isTablet()
-
-/// Returns a value<T> according to the screen size
-/// can give value for:
-/// watch: if the shortestSide is smaller than 300
-/// mobile: if the shortestSide is smaller than 600
-/// tablet: if the shortestSide is smaller than 1200
-/// desktop: if width is largest than 1200
-context.responsiveValue<T>()
-```
-
-### Optional Global Settings and Manual configurations
-
-GetMaterialApp configures everything for you, but if you want to configure Get manually.
-
-```dart
-MaterialApp(
-  navigatorKey: Get.key,
-  navigatorObservers: [GetObserver()],
-);
-```
-
-You will also be able to use your own Middleware within `GetObserver`, this will not influence anything.
-
-```dart
-MaterialApp(
-  navigatorKey: Get.key,
-  navigatorObservers: [
-    GetObserver(MiddleWare.observer) // Here
-  ],
-);
-```
-
-You can create _Global Settings_ for `Get`. Just add `Get.config` to your code before pushing any route.
-Or do it directly in your `GetMaterialApp`
-
-```dart
-GetMaterialApp(
-  enableLog: true,
-  defaultTransition: Transition.fade,
-  opaqueRoute: Get.isOpaqueRouteDefault,
-  popGesture: Get.isPopGestureEnable,
-  transitionDuration: Get.defaultDurationTransition,
-  defaultGlobalState: Get.defaultGlobalState,
-);
-
-Get.config(
-  enableLog = true,
-  defaultPopGesture = true,
-  defaultTransition = Transitions.cupertino
-)
-```
-
-You can optionally redirect all the logging messages from `Get`.
-If you want to use your own, favourite logging package,
-and want to capture the logs there:
-
-```dart
-GetMaterialApp(
-  enableLog: true,
-  logWriterCallback: localLogWriter,
-);
-
-void localLogWriter(String text, {bool isError = false}) {
-  // pass the message to your favourite logging package here
-  // please note that even if enableLog: false log messages will be pushed in this callback
-  // you get check the flag if you want through GetConfig.isLogEnable
-}
-
-```
-
-### Local State Widgets
-
-These Widgets allows you to manage a single value, and keep the state ephemeral and locally.
-We have flavours for Reactive and Simple.
-For instance, you might use them to toggle obscureText in a `TextField`, maybe create a custom
-Expandable Panel, or maybe modify the current index in `BottomNavigationBar` while changing the content
-of the body in a `Scaffold`.
-
-#### ValueBuilder
-
-A simplification of `StatefulWidget` that works with a `.setState` callback that takes the updated value.
-
-```dart
-ValueBuilder<bool>(
-  initialValue: false,
-  builder: (value, updateFn) => Switch(
-    value: value,
-    onChanged: updateFn, // same signature! you could use ( newValue ) => updateFn( newValue )
-  ),
-  // if you need to call something outside the builder method.
-  onUpdate: (value) => print("Value updated: $value"),
-  onDispose: () => print("Widget unmounted"),
-),
-```
-
-#### ObxValue
-
-Similar to [`ValueBuilder`](#valuebuilder), but this is the Reactive version, you pass a Rx instance (remember the magical .obs?) and
-updates automatically... isn't it awesome?
-
-```dart
-ObxValue((data) => Switch(
-        value: data.value,
-        onChanged: data, // Rx has a _callable_ function! You could use (flag) => data.value = flag,
-    ),
-    false.obs,
-),
-```
-
-## Useful tips
+# Reactive Variables (.obs)
 
 `.obs`ervables (also known as _Rx_ Types) have a wide variety of internal methods and operators.
 
@@ -939,26 +268,27 @@ user.update((value){
 
 print( user );
 ```
-## StateMixin
+
+# StateMixin
 
 Another way to handle your `UI` state is use the `StateMixin<T>` .
 To implement it, use the `with` to add the `StateMixin<T>`
 to your controller which allows a T model.
 
-``` dart
-class Controller extends GetController with StateMixin<User>{}
+```dart
+class Controller extends GetxController with StateMixin<User> {}
 ```
 
-The `change()` method change the State whenever we want.
+The `change()` method changes the State whenever we want.
 Just pass the data and the status in this way:
 
 ```dart
 change(data, status: RxStatus.success());
 ```
 
-RxStatus allow these status:
+RxStatus allows these statuses:
 
-``` dart
+```dart
 RxStatus.loading();
 RxStatus.success();
 RxStatus.empty();
@@ -972,70 +302,59 @@ class OtherClass extends GetView<Controller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: controller.obx(
-        (state)=>Text(state.name),
-        
+        (state) => Text(state.name),
         // here you can put your custom loading indicator, but
         // by default would be Center(child:CircularProgressIndicator())
         onLoading: CustomLoadingIndicator(),
         onEmpty: Text('No data found'),
-
         // here also you can set your own error widget, but by
         // default will be an Center(child:Text(error))
-        onError: (error)=>Text(error),
+        onError: (error) => Text(error),
       ),
     );
+  }
 }
 ```
 
-#### GetView
+# ObxValue
 
-I love this Widget, is so simple, yet, so useful!
-
-Is a `const Stateless` Widget that has a getter `controller` for a registered `Controller`, that's all.
+Similar to `Obx`, but designed for local reactive state. You pass an Rx instance and it
+updates automatically:
 
 ```dart
- class AwesomeController extends GetController {
-   final String title = 'My Awesome View';
- }
-
-  // ALWAYS remember to pass the `Type` you used to register your controller!
- class AwesomeView extends GetView<AwesomeController> {
-   @override
-   Widget build(BuildContext context) {
-     return Container(
-       padding: EdgeInsets.all(20),
-       child: Text(controller.title), // just call `controller.something`
-     );
-   }
- }
+ObxValue((data) => Switch(
+        value: data.value,
+        onChanged: data, // Rx has a _callable_ function! You could use (flag) => data.value = flag,
+    ),
+    false.obs,
+),
 ```
 
-#### GetResponsiveView
+# Useful Widgets
 
-Extend this widget to build responsive view.
-this widget contains the `screen` property that have all
-information about the screen size and type.
+## GetView
 
-##### How to use it
+A `const Stateless` Widget that has a getter `controller` for a registered `Controller`, that's all.
 
-You have two options to build it.
+```dart
+class AwesomeController extends GetxController {
+  final String title = 'My Awesome View';
+}
 
-- with `builder` method you return the widget to build.
-- with methods `desktop`, `tablet`,`phone`, `watch`. the specific
-  method will be built when the screen type matches the method
-  when the screen is [ScreenType.Tablet] the `tablet` method
-  will be exuded and so on.
-  **Note:** If you use this method please set the property `alwaysUseBuilder` to `false`
+// ALWAYS remember to pass the `Type` you used to register your controller!
+class AwesomeView extends GetView<AwesomeController> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20),
+      child: Text(controller.title), // just call `controller.something`
+    );
+  }
+}
+```
 
-With `settings` property you can set the width limit for the screen types.
-
-![example](https://github.com/SchabanBo/get_page_example/blob/master/docs/Example.gif?raw=true)
-Code to this screen
-[code](https://github.com/SchabanBo/get_page_example/blob/master/lib/pages/responsive_example/responsive_view.dart)
-
-#### GetWidget
+## GetWidget
 
 Most people have no idea about this Widget, or totally confuse the usage of it.
 The use case is very rare, but very specific: It `caches` a Controller.
@@ -1043,15 +362,15 @@ Because of the _cache_, can't be a `const Stateless`.
 
 > So, when do you need to "cache" a Controller?
 
-If you use, another "not so common" feature of **GetX**: `Get.create()`.
+If you use, another "not so common" feature of **GetX**: `Get.spawn()`.
 
-`Get.create(()=>Controller())` will generate a new `Controller` each time you call
-`Get.find<Controller>()`,
+`Get.spawn(()=>Controller())` will generate a new `Controller` each time you call
+`Get.find<Controller>()`.
 
 That's where `GetWidget` shines... as you can use it, for example,
 to keep a list of Todo items. So, if the widget gets "rebuilt", it will keep the same controller instance.
 
-#### GetxService
+## GetxService
 
 This class is like a `GetxController`, it shares the same lifecycle ( `onInit()`, `onReady()`, `onClose()`).
 But has no "logic" inside of it. It just notifies **GetX** Dependency Injection system, that this subclass
@@ -1062,48 +381,32 @@ So is super useful to keep your "Services" always reachable and active with `Get
 
 ```dart
 Future<void> main() async {
-  await initServices(); /// AWAIT SERVICES INITIALIZATION.
+  await initServices();
   runApp(SomeApp());
 }
 
-/// Is a smart move to make your Services intiialize before you run the Flutter app.
-/// as you can control the execution flow (maybe you need to load some Theme configuration,
-/// apiKey, language defined by the User... so load SettingService before running ApiService.
-/// so GetMaterialApp() doesnt have to rebuild, and takes the values directly.
+/// Initialize services before running the app.
 void initServices() async {
   print('starting services ...');
-  /// Here is where you put get_storage, hive, shared_pref initialization.
-  /// or moor connection, or whatever that's async.
   await Get.putAsync(() => DbService().init());
-  await Get.putAsync(SettingsService()).init();
   print('All services started...');
 }
 
 class DbService extends GetxService {
   Future<DbService> init() async {
     print('$runtimeType delays 2 sec');
-    await 2.delay();
+    await Future.delayed(Duration(seconds: 2));
     print('$runtimeType ready!');
     return this;
   }
 }
-
-class SettingsService extends GetxService {
-  void init() async {
-    print('$runtimeType delays 1 sec');
-    await 1.delay();
-    print('$runtimeType ready!');
-  }
-}
-
 ```
 
-The only way to actually delete a `GetxService`, is with `Get.reset()` which is like a
+The only way to actually delete a `GetxService` is with `Get.reset()` which is like a
 "Hot Reboot" of your app. So remember, if you need absolute persistence of a class instance during the
 lifetime of your app, use `GetxService`.
 
-
-### Tests
+# Testing
 
 You can test your controllers like any other class, including their lifecycles:
 
@@ -1112,7 +415,6 @@ class Controller extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    //Change value to name2
     name.value = 'name2';
   }
 
@@ -1128,25 +430,20 @@ class Controller extends GetxController {
 }
 
 void main() {
-  test('''
-Test the state of the reactive variable "name" across all of its lifecycles''',
-      () {
-    /// You can test the controller without the lifecycle,
-    /// but it's not recommended unless you're not using
-    ///  GetX dependency injection
+  test('Test the state of the reactive variable "name" across all of its lifecycles', () {
     final controller = Controller();
     expect(controller.name.value, 'name1');
 
-    /// If you are using it, you can test everything,
-    /// including the state of the application after each lifecycle.
+    // If you are using GetX DI, you can test everything,
+    // including the state of the application after each lifecycle.
     Get.put(controller); // onInit was called
     expect(controller.name.value, 'name2');
 
-    /// Test your functions
+    // Test your functions
     controller.changeName();
     expect(controller.name.value, 'name3');
 
-    /// onClose was called
+    // onClose was called
     Get.delete<Controller>();
 
     expect(controller.name.value, '');
@@ -1154,87 +451,17 @@ Test the state of the reactive variable "name" across all of its lifecycles''',
 }
 ```
 
-#### Tips
+### Tips
 
-##### Mockito or mocktail
-If you need to mock your GetxController/GetxService, you should extend GetxController, and mixin it with Mock, that way
+#### Mockito or mocktail
+If you need to mock your GetxController/GetxService, you should extend GetxController, and mixin it with Mock, that way:
 
 ```dart
 class NotificationServiceMock extends GetxService with Mock implements NotificationService {}
 ```
 
-##### Using Get.reset()
+#### Using Get.reset()
 If you are testing widgets, or test groups, use Get.reset at the end of your test or in tearDown to reset all settings from your previous test.
-
-##### Get.testMode 
-if you are using your navigation in your controllers, use `Get.testMode = true` at the beginning of your main.
-
-
-# Breaking changes from 2.0
-
-1- Rx types:
-
-| Before  | After      |
-| ------- | ---------- |
-| StringX | `RxString` |
-| IntX    | `RxInt`    |
-| MapX    | `RxMap`    |
-| ListX   | `RxList`   |
-| NumX    | `RxNum`    |
-| DoubleX | `RxDouble` |
-
-RxController and GetBuilder now have merged, you no longer need to memorize which controller you want to use, just use GetxController, it will work for simple state management and for reactive as well.
-
-2- NamedRoutes
-Before:
-
-```dart
-GetMaterialApp(
-  namedRoutes: {
-    '/': GetRoute(page: Home()),
-  }
-)
-```
-
-Now:
-
-```dart
-GetMaterialApp(
-  getPages: [
-    GetPage(name: '/', page: () => Home()),
-  ]
-)
-```
-
-Why this change?
-Often, it may be necessary to decide which page will be displayed from a parameter, or a login token, the previous approach was inflexible, as it did not allow this.
-Inserting the page into a function has significantly reduced the RAM consumption, since the routes will not be allocated in memory since the app was started, and it also allowed to do this type of approach:
-
-```dart
-
-GetStorage box = GetStorage();
-
-GetMaterialApp(
-  getPages: [
-    GetPage(name: '/', page:(){
-      return box.hasData('token') ? Home() : Login();
-    })
-  ]
-)
-```
-
-# Why Getx?
-
-1- Many times after a Flutter update, many of your packages will break. Sometimes compilation errors happen, errors often appear that there are still no answers about, and the developer needs to know where the error came from, track the error, only then try to open an issue in the corresponding repository, and see its problem solved. Get centralizes the main resources for development (State, dependency and route management), allowing you to add a single package to your pubspec, and start working. After a Flutter update, the only thing you need to do is update the Get dependency, and get to work. Get also resolves compatibility issues. How many times a version of a package is not compatible with the version of another, because one uses a dependency in one version, and the other in another version? This is also not a concern using Get, as everything is in the same package and is fully compatible.
-
-2- Flutter is easy, Flutter is incredible, but Flutter still has some boilerplate that may be unwanted for most developers, such as `Navigator.of(context).push (context, builder [...]`. Get simplifies development. Instead of writing 8 lines of code to just call a route, you can just do it: `Get.to(Home())` and you're done, you'll go to the next page. Dynamic web urls are a really painful thing to do with Flutter currently, and that with GetX is stupidly simple. Managing states in Flutter, and managing dependencies is also something that generates a lot of discussion, as there are hundreds of patterns in the pub. But there is nothing as easy as adding a ".obs" at the end of your variable, and place your widget inside an Obx, and that's it, all updates to that variable will be automatically updated on the screen.
-
-3- Ease without worrying about performance. Flutter's performance is already amazing, but imagine that you use a state manager, and a locator to distribute your blocs/stores/controllers/ etc. classes. You will have to manually call the exclusion of that dependency when you don't need it. But have you ever thought of simply using your controller, and when it was no longer being used by anyone, it would simply be deleted from memory? That's what GetX does. With SmartManagement, everything that is not being used is deleted from memory, and you shouldn't have to worry about anything but programming. You will be assured that you are consuming the minimum necessary resources, without even having created a logic for this.
-
-4- Actual decoupling. You may have heard the concept "separate the view from the business logic". This is not a peculiarity of BLoC, MVC, MVVM, and any other standard on the market has this concept. However, this concept can often be mitigated in Flutter due to the use of context.
-If you need context to find an InheritedWidget, you need it in the view, or pass the context by parameter. I particularly find this solution very ugly, and to work in teams we will always have a dependence on View's business logic. Getx is unorthodox with the standard approach, and while it does not completely ban the use of StatefulWidgets, InitState, etc., it always has a similar approach that can be cleaner. Controllers have life cycles, and when you need to make an APIREST request for example, you don't depend on anything in the view. You can use onInit to initiate the http call, and when the data arrives, the variables will be populated. As GetX is fully reactive (really, and works under streams), once the items are filled, all widgets that use that variable will be automatically updated in the view. This allows people with UI expertise to work only with widgets, and not have to send anything to business logic other than user events (like clicking a button), while people working with business logic will be free to create and test the business logic separately.
-
-This library will always be updated and implementing new features. Feel free to offer PRs and contribute to them.
 
 # Community
 
@@ -1250,9 +477,8 @@ GetX has a highly active and helpful community. If you have questions, or would 
 
 _Want to contribute to the project? We will be proud to highlight you as one of our collaborators. Here are some points where you can contribute and make Get (and Flutter) even better._
 
-- Helping to translate the readme into other languages.
-- Adding documentation to the readme (a lot of Get's functions haven't been documented yet).
-- Write articles or make videos teaching how to use Get (they will be inserted in the Readme and in the future in our Wiki).
+- Adding documentation to the readme.
+- Write articles or make videos teaching how to use Get.
 - Offering PRs for code/tests.
 - Including new functions.
 
@@ -1260,20 +486,7 @@ Any contribution is welcome!
 
 ## Articles and videos
 
-- [Flutter Getx EcoSystem package for arabic people](https://www.youtube.com/playlist?list=PLV1fXIAyjeuZ6M8m56zajMUwu4uE3-SL0) - Tutorial by [Pesa Coder](https://github.com/UsamaElgendy).
-- [Dynamic Themes in 3 lines using GetX™](https://medium.com/swlh/flutter-dynamic-themes-in-3-lines-c3b375f292e3) - Tutorial by [Rod Brown](https://github.com/RodBr).
-- [Complete GetX™ Navigation](https://www.youtube.com/watch?v=RaqPIoJSTtI) - Route management video by Amateur Coder.
 - [Complete GetX State Management](https://www.youtube.com/watch?v=CNpXbeI_slw) - State management video by Amateur Coder.
-- [GetX™ Other Features](https://youtu.be/ttQtlX_Q0eU) - Utils, storage, bindings and other features video by Amateur Coder.
-- [Firestore User with GetX | Todo App](https://www.youtube.com/watch?v=BiV0DcXgk58) - Video by Amateur Coder.
-- [Firebase Auth with GetX | Todo App](https://www.youtube.com/watch?v=-H-T_BSgfOE) - Video by Amateur Coder.
-- [The Flutter GetX™ Ecosystem ~ State Management](https://medium.com/flutter-community/the-flutter-getx-ecosystem-state-management-881c7235511d) - State management by [Aachman Garg](https://github.com/imaachman).
-- [The Flutter GetX™ Ecosystem ~ Dependency Injection](https://medium.com/flutter-community/the-flutter-getx-ecosystem-dependency-injection-8e763d0ec6b9) - Dependency Injection by [Aachman Garg](https://github.com/imaachman).
-- [GetX, the all-in-one Flutter package](https://www.youtube.com/watch?v=IYQgtu9TM74) - A brief tutorial covering State Management and Navigation by Thad Carnevalli.
-- [Build a To-do List App from scratch using Flutter and GetX](https://www.youtube.com/watch?v=EcnqFasHf18) - UI + State Management + Storage video by Thad Carnevalli.
-- [GetX Flutter Firebase Auth Example](https://medium.com/@jeffmcmorris/getx-flutter-firebase-auth-example-b383c1dd1de2) - Article by Jeff McMorris.
-- [Flutter State Management with GetX – Complete App](https://www.appwithflutter.com/flutter-state-management-with-getx/) - by App With Flutter.
-- [Flutter Routing with Animation using Get Package](https://www.appwithflutter.com/flutter-routing-using-get-package/) - by App With Flutter.
-- [A minimal example on dartpad](https://dartpad.dev/2b3d0d6f9d4e312c5fdbefc414c1727e?) - by [Roi Peker](https://github.com/roipeker)
-- [GetConnect: The best way to perform API operations in Flutter with Get.](https://absyz.com/getconnect-the-best-way-to-perform-api-operations-in-flutter-with-getx/) - by [MD Sarfaraj](https://github.com/socialmad)
-- [How To Create an App with GetX Architect in Flutter with Get CLI](https://www.youtube.com/watch?v=7mb4qBA7kTk&t=1380s) - by [MD Sarfaraj](https://github.com/socialmad)
+- [The Flutter GetX Ecosystem ~ State Management](https://medium.com/flutter-community/the-flutter-getx-ecosystem-state-management-881c7235511d) - State management by [Aachman Garg](https://github.com/imaachman).
+- [The Flutter GetX Ecosystem ~ Dependency Injection](https://medium.com/flutter-community/the-flutter-getx-ecosystem-dependency-injection-8e763d0ec6b9) - Dependency Injection by [Aachman Garg](https://github.com/imaachman).
+- [Flutter State Management with GetX -- Complete App](https://www.appwithflutter.com/flutter-state-management-with-getx/) - by App With Flutter.
