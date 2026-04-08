@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../../get.dart';
+import '../../get_core/get_core.dart';
 
 /// The [GetLifeCycle]
 ///

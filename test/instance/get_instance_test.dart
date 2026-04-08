@@ -33,7 +33,7 @@ void main() {
   test('Get.put test', () async {
     final instance = Get.put<Controller>(Controller());
     expect(instance, Get.find<Controller>());
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get start and delete called just one time', () async {
@@ -48,7 +48,7 @@ void main() {
       ..delete<Controller>()
       ..delete<Controller>();
     expect(controller.close, 1);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.put tag test', () async {
@@ -61,7 +61,7 @@ void main() {
         true);
     expect(Get.find<Controller>(tag: 'two') == Get.find<Controller>(tag: 'two'),
         true);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.lazyPut tag test', () async {
@@ -74,7 +74,7 @@ void main() {
         true);
     expect(Get.find<Controller>(tag: 'two') == Get.find<Controller>(tag: 'two'),
         true);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.lazyPut test', () async {
@@ -82,7 +82,7 @@ void main() {
     Get.lazyPut<Controller>(() => controller);
     final ct1 = Get.find<Controller>();
     expect(ct1, controller);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.lazyPut fenix test', () async {
@@ -92,7 +92,7 @@ void main() {
     expect(Get.find<Controller>().count, 1);
     Get.delete<Controller>();
     expect(Get.find<Controller>().count, 0);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.lazyPut without fenix', () async {
@@ -103,7 +103,7 @@ void main() {
     Get.delete<Controller>();
     expect(
         () => Get.find<Controller>(), throwsA(const m.TypeMatcher<String>()));
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.reloadInstance test', () async {
@@ -116,7 +116,7 @@ void main() {
     Get.reload<Controller>();
     ct1 = Get.find<Controller>();
     expect(ct1.count, 0);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('GetxService test', () async {
@@ -129,7 +129,7 @@ void main() {
     expect(Get.isRegistered<PermanentService>(), true);
     Get.delete<PermanentService>(force: true);
     expect(Get.isRegistered<PermanentService>(), false);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.lazyPut with abstract class test', () async {
@@ -137,7 +137,7 @@ void main() {
     Get.lazyPut<Service>(() => api);
     final ct1 = Get.find<Service>();
     expect(ct1, api);
-    Get.reset();
+    Get.resetInstance();
   });
 
   test('Get.create with abstract class test', () async {
@@ -147,11 +147,11 @@ void main() {
     // expect(ct1 is Service, true);
     // expect(ct2 is Service, true);
     expect(ct1 == ct2, false);
-    Get.reset();
+    Get.resetInstance();
   });
 
   group('test put, delete and check onInit execution', () {
-    tearDownAll(Get.reset);
+    tearDownAll(Get.resetInstance);
 
     test('Get.put test with init check', () async {
       final instance = Get.put(DisposableController());
@@ -175,7 +175,7 @@ void main() {
   });
 
   group('Get.replace test for replacing parent instance that is', () {
-    tearDown(Get.reset);
+    tearDown(Get.resetInstance);
     test('temporary', () async {
       Get.put(DisposableController());
       Get.replace<DisposableController>(Controller());
@@ -221,7 +221,7 @@ void main() {
   });
 
   group('Get.lazyReplace replaces parent instance', () {
-    tearDown(Get.reset);
+    tearDown(Get.resetInstance);
     test('without fenix', () async {
       Get.put(DisposableController());
       Get.lazyReplace<DisposableController>(() => Controller());
@@ -255,7 +255,7 @@ void main() {
   });
 
   group('Get.findOrNull test', () {
-    tearDown(Get.reset);
+    tearDown(Get.resetInstance);
     test('checking results', () async {
       Get.put<int>(1);
       int? result = Get.findOrNull<int>();

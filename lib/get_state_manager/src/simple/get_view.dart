@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../../../get_utils/src/extensions/event_loop_extensions.dart';
 import '../../../instance_manager.dart';
-import '../../../utils.dart';
 import 'get_state.dart';
 import 'get_widget_cache.dart';
 
